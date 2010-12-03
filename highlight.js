@@ -23,19 +23,19 @@
 			var hash = document.location.hash,
 				p = /h[0-9]+/.exec(hash),
 				s = /s[0-9]+/.exec(hash),
-				hightlightClass = 'highlight',
+				highlightClass = 'highlight',
 				pNum, sNum, selPar;
 
-			$('p').removeClass(hightlightClass);
-			$('p span').removeClass(hightlightClass);
+			$('p').removeClass(highlightClass);
+			$('p span').removeClass(highlightClass);
 			if (p) {
 				pNum = /[0-9]+/.exec(p) - 1;
 				selPar = $('p').eq(pNum);
 				if (!s) {
-					selPar.addClass(hightlightClass);
+					selPar.addClass(highlightClass);
 				} else {
 					sNum = /[0-9]+/.exec(s) - 1;
-					selPar.find('span.sentence').eq(sNum).addClass(hightlightClass);
+					selPar.find('span.sentence').eq(sNum).addClass(highlightClass);
 				}
 			}
 		};
