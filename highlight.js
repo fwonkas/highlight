@@ -21,20 +21,20 @@
 
 		var highlight = function() {
 			var hash = document.location.hash,
-				p = /h[0-9]+/.exec(hash),
-				s = /s[0-9]+/.exec(hash),
+				p = /h\d+/.exec(hash),
+				s = /s\d+/.exec(hash),
 				highlightClass = 'highlight',
 				pNum, sNum, selPar;
 
 			$('p').removeClass(highlightClass);
 			$('p span').removeClass(highlightClass);
 			if (p) {
-				pNum = /[0-9]+/.exec(p) - 1;
+				pNum = /\d+/.exec(p) - 1;
 				selPar = $('p').eq(pNum);
 				if (!s) {
 					selPar.addClass(highlightClass);
 				} else {
-					sNum = /[0-9]+/.exec(s) - 1;
+					sNum = /\d+/.exec(s) - 1;
 					selPar.find('span.sentence').eq(sNum).addClass(highlightClass);
 				}
 			}
