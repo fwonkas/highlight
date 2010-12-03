@@ -1,10 +1,8 @@
 (function($) {
 	$(document).ready(function() {
-		var sentences,
-		    pCount = 1,
-		    ws = /^\s+/,
-		    space,
-		    marker = '.';
+		var sentences, pCount = 1,
+			ws = /^\s+/,
+			space, marker = '.';
 		// Wrap all sentences with span tags with class "sentence".  Ugly.
 		// There's got to be a better way.
 		$('p').each(function(index) {
@@ -41,7 +39,7 @@
 				}
 			}
 		};
-		$(window).bind('hashchange', highlight);		
+		$(window).bind('hashchange', highlight);
 		highlight();
 	} ());
-}(jQuery));
+} (jQuery));
