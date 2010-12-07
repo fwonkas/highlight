@@ -8,7 +8,6 @@
 		// Wrap all sentences with span tags with class "sentence".  Ugly.
 		// There's got to be a better way.
 		var wrapSentences = function wrapSentences() {
-			console.log(root);
 			root.find('p').each(function(index) {
 				sentences = $(this).html().split(marker);
 				$(this).html(function() {
