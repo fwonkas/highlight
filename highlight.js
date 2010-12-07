@@ -48,7 +48,7 @@
 								highlightSentence(selPar, i);
 							};
 						} else {
-						highlightSentence(selPar, digits(s));
+							highlightSentence(selPar, digits(s));
 					};
 				}
 			}
