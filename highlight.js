@@ -1,11 +1,11 @@
 (function($) {
-	$(document).ready(function() {
+	$(document).ready(function(start) {
 		var sentences, pCount = 1,
 			ws = /^\s+/,
 			space, marker = '.';
 		// Wrap all sentences with span tags with class "sentence".  Ugly.
 		// There's got to be a better way.
-		$('p').each(function(index) {
+		start.find('p').each(function(index) {
 			sentences = $(this).html().split(marker);
 			$(this).html(function() {
 				// Yes, length - 2.  Otherwise it wraps the final period of the paragraph with a span.
@@ -32,11 +32,11 @@
 			    	return parseInt(/\d+/.exec(str) - 1, 10);
 			    };
 
-			$('p').removeClass(highlightClass);
-			$('p span').removeClass(highlightClass);
+			start.find('p').removeClass(highlightClass);
+			start.find('p span').removeClass(highlightClass);
 			if (p) {
 				pNum = /\d+/.exec(p) - 1;
-				selPar = $('p').eq(pNum);
+				selPar = start.find('p').eq(pNum);
 				if (!s) {
 					selPar.addClass(highlightClass);
 				} else {
@@ -55,5 +55,5 @@
 		};
 		$(window).bind('hashchange', highlight);
 		highlight();
-	} ());
+	} ($('#story'))); // The value passed specifies what element the relevant paragraphs are in.
 } (jQuery));
