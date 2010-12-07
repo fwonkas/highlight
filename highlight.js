@@ -21,10 +21,16 @@
 
 		var highlight = function() {
 			var hash = document.location.hash,
-				p = /h\d+/.exec(hash),
-				s = /s\d+/.exec(hash),
-				highlightClass = 'highlight',
-				pNum, sNum, selPar;
+			    p = /h\d+/.exec(hash),
+			    s = /s\d+-\d+/.exec(hash) || /s\d+/.exec(hash),
+			    highlightClass = 'highlight',
+			    pNum, sNum, selPar, sSpan, first, last,
+			    highlightSentence = function highlightSentence(p, s) {
+			    	p.find('span.sentence').eq(s).addClass(highlightClass);
+			    },
+			    digits = function digits(str) {
+			    	return parseInt(/\d+/.exec(str) - 1, 10);
+			    };
 
 			$('p').removeClass(highlightClass);
 			$('p span').removeClass(highlightClass);
@@ -34,8 +40,16 @@
 				if (!s) {
 					selPar.addClass(highlightClass);
 				} else {
-					sNum = /\d+/.exec(s) - 1;
-					selPar.find('span.sentence').eq(sNum).addClass(highlightClass);
+					sSpan = String(s).split('-');
+						if (sSpan.length > 1) {
+							first = digits(sSpan[0]);
+							last = digits(sSpan[1]);
+							for (var i=first; i <= last; i++) {
+								highlightSentence(selPar, i);
+							};
+						} else {
+						highlightSentence(selPar, digits(s));
+					};
 				}
 			}
 		};
