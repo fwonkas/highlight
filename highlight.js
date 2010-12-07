@@ -7,47 +7,43 @@
 		    root = $(document.body);
 		// Wrap all sentences with span tags with class "sentence".  Ugly.
 		// There's got to be a better way.
-		var wrapSentences = function wrapSentences() {
-			root.find('p').each(function(index) {
-				sentences = $(this).html().split(marker);
-				$(this).html(function() {
-					// Yes, length - 2.  Otherwise it wraps the final period of the paragraph with a span.
-					for (i = sentences.length - 2; i >= 0; i -= 1) {
-						space = ws.exec(sentences[i]);
-						sentences[i] = sentences[i].replace(ws, '');
-						sentences[i] = '<span class="sentence">' + sentences[i] + marker + '</span>' + space;
-					};
-					return sentences.join('');
+		var hl = {
+			wrapSentences: function wrapSentences() {
+				root.find('p').each(function(index) {
+					sentences = $(this).html().split(marker);
+					$(this).html(function() {
+						// Yes, length - 2.  Otherwise it wraps the final period of the paragraph with a span.
+						for (i = sentences.length - 2; i >= 0; i -= 1) {
+							space = ws.exec(sentences[i]);
+							sentences[i] = sentences[i].replace(ws, '');
+							sentences[i] = '<span class="sentence">' + sentences[i] + marker + '</span>' + space;
+						};
+						return sentences.join('');
+					});
+					$(this).prepend('<a name="p' + (pCount++) + '"></a>');
 				});
-				$(this).prepend('<a name="p' + (pCount++) + '"></a>');
-			});
-		}
-
-		var highlightSentence = function highlightSentence(paragraph, sentence, end) {
-			for (var i=sentence; i <= (end || sentence); i++) {
-		    	paragraph.find('span.sentence').eq(i).addClass(highlightClass);
-			}
-	    }
-
-		var digits = function digits(str) {
-			return parseInt(/\d+/.exec(str) - 1, 10);
-		}
-
-		var determineRootEl = function determineRootEl(arguments) {
-			var args = Array.prototype.slice.call(arguments),
-			    id, idRe = /^#/;
-			for (var i=0; i < args.length; i++) {
-				if (args[i] instanceof HTMLElement) {
-					return $(args[i]);
-				} else if (typeof args[i] == 'string') {
-					id = args[i].replace(idRe, '');
-					if (document.getElementById(id)) {
-						return $('#' + id);
-					}
+				this.wrapSentences = function(){};
+			},
+			sentence: function sentence(paragraph, begin, end) {
+				for (var i=begin; i <= (parseInt(end, 10) || parseInt(begin, 10)); i++) {
+			    	paragraph.find('span.sentence').eq(i).addClass(highlightClass);
 				}
-			};
-			return root;
-			
+		    },
+			determineRootEl: function determineRootEl(arguments) {
+				var args = Array.prototype.slice.call(arguments),
+				    id, idRe = /^#/;
+				for (var i=0; i < args.length; i++) {
+					if (args[i] instanceof HTMLElement) {
+						return $(args[i]);
+					} else if (typeof args[i] == 'string') {
+						id = args[i].replace(idRe, '');
+						if (document.getElementById(id)) {
+							return $('#' + id);
+						}
+					}
+				};
+				return root;
+			}
 		}
 
 		global.highlight = function highlight() {
@@ -55,12 +51,11 @@
 			    h = /h\d+/.exec(hash),
 			    s = /s\d+-\d+/.exec(hash) || /s\d+/.exec(hash),
 			    p = /p\d+/.exec(hash),
-			    pNum, sNum, selPar, sSpan, first, last, params = [];
+			    pNum, sNum, selPar, sSpan, params = [];
 			    
 
-			root = determineRootEl(arguments);
-			wrapSentences(root);
-			wrapSentences = function (){return false;}
+			root = hl.determineRootEl(arguments);
+			hl.wrapSentences();
 
 			root.find('p').removeClass(highlightClass);
 			root.find('p span').removeClass(highlightClass);
@@ -74,15 +69,15 @@
 					sSpan = String(s).split('-');
 					params.push(selPar);
 					for (var i=0; i < sSpan.length; i++) {
-						params.push(digits(sSpan[i]));
+						params.push(parseInt(/\d+/.exec(sSpan[i]) - 1, 10));
 					};
-					highlightSentence.apply(this, params);
+					hl.sentence.apply(this, params);
 				}
 			}
 			if (p) {
 				setTimeout(function() {window.scrollTo(0, $('[name=' + p + ']').first().position().top)}, 20);
 			}
 		};
-		$(window).bind('hashchange', global.highlight);
+		$(window).bind('hashchange', highlight);
 	} ());
 } (jQuery, this));
