@@ -5,12 +5,12 @@ Allows for highlighting paragraphs and sentences by modifying URL's hash.  In br
 
 Example hashes:
 
-* #h4 — highlights paragraph 4.
+* \#h4 — highlights paragraph 4.
 
-* #h5s3 — highlights sentence 3 in paragraph 5.
+* \#h5s3 — highlights sentence 3 in paragraph 5.
 
-* #h2s1-4 — hightlights sentences 1–4 in paragraph 2.
+* \#h2s1-4 — hightlights sentences 1–4 in paragraph 2.
 
-* #p6 — scroll to paragraph 6.
+* \#p6 — scroll to paragraph 6.
 
 See highlight.html for further examples.
