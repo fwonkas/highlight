@@ -10,9 +10,6 @@
 		var hl = {
 			wrapSentences: function wrapSentences() {
 				var stop = /[.?!]/,
-					trim = function(str) {
-						return str.replace(/^\s+/, '').replace(/\s+$/, '');
-					},
 					splitSentences = function(str) {
 						var sentencePoints = [],
 							inTag = false,
@@ -62,7 +59,7 @@
 							point = points[i];
 							sentence = p.slice(point.start, point.end + 1);
 							trailing = sentence.match(/\s+$/) || '';
-							sentence = trim(sentence);
+							sentence = $.trim(sentence);
 							sentence = '<mark class="sentence">' + sentence + '</mark>' + trailing;
 							paragraph += sentence;
 						};
