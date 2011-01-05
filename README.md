@@ -13,6 +13,6 @@ Example hashes:
 Notes:
 
 * Sentence detection is hard. This javascript tries to avoid some obvious pitfalls and I hope to improve it, but it's far, far from perfect.  It's not even very good, though it's better than it was.
-* The <mark> tag is used to mark sentences.  If <mark> tags are already present in the text blocks, some sentence highlighting may not work right.
+* The &lt;mark&gt; tag is used to mark sentences.  If &lt;mark&gt; tags are already present in the text blocks, some sentence highlighting may not work right.
 
 See highlight.html for further examples.
